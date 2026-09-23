@@ -53,7 +53,7 @@ async function api(action, payload) {
     if(!response.ok)throw new Error("Sambungan pelayan gagal ("+response.status+").");
     let data;
     try{data=await response.json();}catch{throw new Error("Pelayan tidak memulangkan data JSON. Semak URL dan akses deployment Apps Script.");}
-    if(data.status!=="success")throw new Error(data.message||"Pelayan tidak dapat melengkapkan permintaan.");
+    if(data.status!=="success"){const error=new Error(data.message||"Pelayan tidak dapat melengkapkan permintaan.");error.saveState=data.saveState;throw error;}
     return data;
   } catch(error) {
     if(error.name==="AbortError")throw new Error("Masa menunggu pelayan telah tamat.");
@@ -117,11 +117,41 @@ function choices(container,items,name,type){
   $(container).replaceChildren();
   for(const item of items){const label=node("label","choice");const input=node("input");input.type=type;input.name=name;input.value=item.label;input.dataset.code=item.kod;label.append(input,node("span","",item.label));$(container).append(label);}
 }
-function populateStaff(select,value="",placeholder="Pilih guru"){
+let pickerSequence=0;
+function populateStaff(select,value="",placeholder="Taip nama guru…"){
   select.replaceChildren(option("",placeholder));
   state.staff.forEach(person=>select.append(option(person.ID_Guru,person.Nama_Guru)));
   if(value&&!state.staff.some(p=>p.ID_Guru===value))select.append(option(value,value+" · tidak aktif / tiada dalam senarai"));
   select.value=value;
+  if(!select._picker){
+    const wrapper=node("span","staff-picker");
+    const input=node("input","staff-search");
+    const list=node("span","staff-suggestions");
+    const id="staff-suggestions-"+(++pickerSequence);
+    input.type="text";input.autocomplete="off";input.placeholder="Taip nama guru…";
+    input.setAttribute("role","combobox");input.setAttribute("aria-autocomplete","list");input.setAttribute("aria-expanded","false");input.setAttribute("aria-controls",id);
+    list.id=id;list.setAttribute("role","listbox");list.hidden=true;
+    select.hidden=true;select.tabIndex=-1;
+    select.after(wrapper);wrapper.append(input,list);
+    const picker={input,list,active:-1,matches:[]};select._picker=picker;
+    function close(){list.hidden=true;input.setAttribute("aria-expanded","false");input.removeAttribute("aria-activedescendant");picker.active=-1;}
+    function choose(person){select.value=person.ID_Guru;input.value=person.Nama_Guru;input.setCustomValidity("");close();select.dispatchEvent(new Event("change",{bubbles:true}));input.focus();}
+    function highlight(){[...list.children].forEach((el,i)=>el.setAttribute("aria-selected",String(i===picker.active)));if(picker.active>=0){input.setAttribute("aria-activedescendant",list.children[picker.active].id);list.children[picker.active].scrollIntoView({block:"nearest"});}}
+    function suggest(){
+      const query=input.value.trim().toLocaleLowerCase("ms");list.replaceChildren();picker.active=-1;
+      picker.matches=query?state.staff.filter(p=>p.Nama_Guru.toLocaleLowerCase("ms").includes(query)).slice(0,8):[];
+      if(!query){close();return;}
+      picker.matches.forEach((person,i)=>{const item=node("span","staff-option",person.Nama_Guru);item.id=id+"-"+i;item.setAttribute("role","option");item.setAttribute("aria-selected","false");item.addEventListener("pointerdown",e=>e.preventDefault());item.addEventListener("click",()=>choose(person));list.append(item);});
+      if(!picker.matches.length)list.append(node("span","staff-no-match","Tiada padanan. Cuba nama lain."));
+      list.hidden=false;input.setAttribute("aria-expanded","true");input.removeAttribute("aria-activedescendant");
+    }
+    input.addEventListener("input",()=>{select.value="";input.setCustomValidity(input.value.trim()?"Pilih nama daripada cadangan.":"");suggest();});
+    input.addEventListener("focus",suggest);
+    input.addEventListener("blur",()=>{close();input.setCustomValidity(input.value.trim()&&!select.value?"Pilih nama daripada cadangan.":"");});
+    input.addEventListener("keydown",e=>{if(e.key==="Escape"){close();return;}if(["ArrowDown","ArrowUp"].includes(e.key)){e.preventDefault();if(list.hidden)suggest();if(!picker.matches.length)return;picker.active=(picker.active+(e.key==="ArrowDown"?1:-1)+picker.matches.length)%picker.matches.length;highlight();}else if(e.key==="Enter"&&!list.hidden){e.preventDefault();if(picker.active>=0)choose(picker.matches[picker.active]);}});
+  }
+  const input=select._picker.input;input.value=value?staffName(value):"";input.required=select.required;input.setCustomValidity("");select._picker.list.hidden=true;input.setAttribute("aria-expanded","false");
+  input.setAttribute("aria-label",select.name==="member"?"Nama ahli":select.id==="disediakanOleh"?"Disediakan oleh":"Disahkan oleh");
 }
 function renderOptions(){
   choices("#domain-options",state.config.domains,"domainKompetensi","checkbox");
@@ -147,17 +177,17 @@ function conditionalFields(){
   $("#tarikhAkhir").min=$("#tarikhMula").value;
 }
 function addMember(value=""){
-  const row=node("div","member-row");const label=node("label");const caption=node("span");const select=node("select");select.name="member";select.required=true;populateStaff(select,value);label.append(caption,select);
+  const row=node("div","member-row");const label=node("label");const caption=node("span");const select=node("select");select.name="member";select.required=true;label.append(caption,select);populateStaff(select,value);
   row.append(label,button("×","",()=>{row.remove();numberMembers();markDirty();}));$("#member-list").append(row);numberMembers();
 }
-function numberMembers(){$$(".member-row").forEach((row,index)=>{$("label>span",row).textContent="Ahli "+(index+1);$("button",row).setAttribute("aria-label","Buang ahli "+(index+1));$("button",row).disabled=$$(".member-row").length<=2;});}
+function numberMembers(){$$(".member-row").forEach((row,index)=>{$("label>span",row).textContent="Ahli "+(index+1);$(".staff-search",row).setAttribute("aria-label","Ahli "+(index+1));$("button",row).setAttribute("aria-label","Buang ahli "+(index+1));$("button",row).disabled=$$(".member-row").length<=2;});}
 function collect(){
   const data={idPLC:state.editingId};
   Object.keys(FIELD_MAP).forEach(key=>{data[key]=$("#"+key).disabled?"":$("#"+key).value.trim();});
   return {...data,domainKompetensi:selected("domainKompetensi"),bidangPLC:selected("bidangPLC")[0]||"",alatKolaboratif:selected("alatKolaboratif"),ahliKumpulan:$$("select[name='member']").map(select=>select.value).filter(Boolean)};
 }
 function resetForm(){
-  form.reset();state.editingId="";state.dirty=false;state.uncertain=false;
+  form.reset();populateStaff($("#disediakanOleh"));populateStaff($("#disahkanOleh"));state.editingId="";state.dirty=false;state.uncertain=false;
   $$(".legacy",form).forEach(el=>el.remove());
   $("#tahun").value=thisYear();$("#member-list").replaceChildren();addMember();addMember();
   $("#edit-banner").hidden=true;$("#submit-report").textContent="Simpan & jana PDF";
@@ -287,7 +317,12 @@ async function saveReport(event){
     state.uncertain=false;state.dirty=false;clearDraft();state.editingId=record.ID_PLC;hydrate({...payload,idPLC:record.ID_PLC});renderFilters();renderDashboard();renderArchive();
     showStatus("Laporan berjaya disimpan.","PDF telah dijana dan disimpan ke Google Drive. ID laporan: "+record.ID_PLC,false);
     $("#status-actions").append(pdfLink(result.pdfUrl),button("Lihat arkib","secondary",()=>{$("#status-dialog").close();navigate("archive");}),button("Laporan baharu","text-button",()=>{$("#status-dialog").close();resetForm();navigate("form");}));
-  } catch(error){writeDraft();showUncertain(error.message);}
+  } catch(error){
+    if(error.saveState==="not_saved"){
+      state.uncertain=false;writeDraft();showStatus("Laporan belum disimpan.",error.message+" Draf anda dikekalkan. Betulkan masalah dan cuba semula.",false);
+      $("#status-actions").append(button("Kembali ke borang","primary",()=>$("#status-dialog").close()));
+    }else{writeDraft();showUncertain(error.message);}
+  }
   finally {clearTimeout(slow);state.saving=false;form.removeAttribute("aria-busy");updateSubmit();}
 }
 
@@ -300,7 +335,7 @@ function setup(){
   $("#retry-bootstrap").addEventListener("click",()=>loadMaster(true));$("#browse-shell").addEventListener("click",()=>$("#app-loader").hidden=true);
   $("#refresh-data").addEventListener("click",()=>loadMaster());$("#reload-home").addEventListener("click",()=>loadMaster());
   form.addEventListener("input",markDirty);form.addEventListener("change",markDirty);form.addEventListener("submit",saveReport);
-  $("#add-member").addEventListener("click",()=>{addMember();$$("select[name='member']").at(-1).focus();markDirty();});
+  $("#add-member").addEventListener("click",()=>{addMember();$$(".member-row .staff-search").at(-1).focus();markDirty();});
   $("#next-step").addEventListener("click",()=>{if(validateStep(state.step)){setStep(state.step+1);if(state.dirty)writeDraft();}});
   $("#previous-step").addEventListener("click",()=>setStep(state.step-1));
   $$("[data-step]").forEach(b=>b.addEventListener("click",()=>{const target=Number(b.dataset.step);if(target>state.step){for(let i=state.step;i<target;i++)if(!validateStep(i))return;}setStep(target);}));
