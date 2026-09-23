@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1427">
+  <meta name="description" content="Pusat pelaporan Professional Learning Community SK Methodist PJ.">
+  <title>MPS PLC | SK Methodist PJ</title>
+  <link rel="icon" type="image/png" href="assets/logo-mps.png">
+  <link rel="apple-touch-icon" href="assets/logo-mps.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ms_MY">
+  <meta property="og:site_name" content="MPS PLC | SK Methodist PJ">
+  <link rel="canonical" href="https://methodistpj.github.io/plcmps/">
+  <meta property="og:url" content="https://methodistpj.github.io/plcmps/">
+  <meta property="og:title" content="Pembelajaran yang berkembang. Perkongsian yang bermakna.">
+  <meta property="og:description" content="PLC · Professional Learning Community. Pusat pelaporan pembelajaran profesional SK Methodist PJ.">
+  <meta property="og:image" content="https://methodistpj.github.io/plcmps/assets/og-image-plc.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1672">
+  <meta property="og:image:height" content="941">
+  <meta property="og:image:alt" content="SK Methodist PJ — Pembelajaran yang berkembang. Perkongsian yang bermakna.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pembelajaran yang berkembang. Perkongsian yang bermakna.">
+  <meta name="twitter:description" content="Pusat pelaporan pembelajaran profesional SK Methodist PJ.">
+  <meta name="twitter:image" content="https://methodistpj.github.io/plcmps/assets/og-image-plc.png">
+  <meta name="twitter:image:alt" content="SK Methodist PJ — Pembelajaran yang berkembang. Perkongsian yang bermakna.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="audit.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Langkau ke kandungan</a>
+  <div id="app-loader" class="app-loader" role="status" aria-live="polite">
+    <div class="app-loader-inner"><p class="eyebrow">SK METHODIST PJ · MPS PLC</p><h1>Menyediakan portal.</h1><div class="app-loader-line"><i></i></div><p id="loader-status">Memuatkan rekod, guru dan tetapan…</p><button id="retry-bootstrap" class="secondary" hidden>Cuba semula</button><button id="browse-shell" class="text-button" hidden>Lihat portal</button></div>
+  </div>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" data-nav="home" aria-label="MPS PLC — Dashboard"><img src="assets/logo-mps.png" alt="Logo SK Methodist PJ" width="48" height="48" style="display:block;object-fit:contain;flex-shrink:0"><span><strong>PLC</strong><small>PUSAT DOKUMENTASI</small></span></a>
+      <nav id="main-nav" aria-label="Navigasi utama"><button class="nav-link active" data-nav="home">Dashboard</button><button class="nav-link" data-nav="archive">Arkib</button><button class="nav-link" data-nav="form">Borang baharu</button></nav>
+      <div class="topbar-end"><span id="connection" class="connection">Menyambung</span><button id="menu-button" class="menu-button" aria-controls="main-nav" aria-expanded="false" aria-label="Buka navigasi">☰</button></div>
+    </header>
+    <main id="main" tabindex="-1">
+      <div id="connection-banner" class="notice warning" hidden><span id="connection-message"></span><button id="refresh-data" class="text-button">Cuba sambung semula ↻</button></div>
+      <section id="home-view" class="view" aria-labelledby="hero-title">
+        <section class="landing-section" id="landing-section">
+          <div class="hero-copy"><p class="eyebrow">SK METHODIST PJ / PROFESSIONAL LEARNING COMMUNITY</p><h1 id="hero-title">Pembelajaran bersama.<br><em>Amalan yang berkembang.</em></h1><p class="lede">Ruang untuk guru berkolaborasi, berkongsi amalan dan mendokumentasikan perubahan yang bermakna.</p><div class="hero-actions"><button class="primary" data-nav="form">+ Cipta laporan PLC</button><button class="secondary" data-scroll="stats-section">Lihat aktiviti sekolah ↓</button></div></div>
+          <div class="hero-bottom"><span>KOMUNITI PEMBELAJARAN PROFESIONAL</span><span>FOCUS <b>→</b> IMPROVE <b>→</b> SHARE</span></div>
+        </section>
+        <section id="stats-section" class="stats-section" aria-labelledby="stats-heading"><div class="section-title"><div><p class="eyebrow">DENYUT SEKOLAH</p><h2 id="stats-heading" class="editorial">Setiap perkongsian bermakna.</h2><p class="muted">Perkembangan PLC dan dokumentasi terkini sekolah.</p></div><button class="text-button" id="reload-home">Segarkan data ↻</button></div>
+          <div class="stats-grid"><article class="stat"><span class="eyebrow">01 / DOKUMENTASI</span><strong id="stat-year">—</strong><span>PLC tahun ini</span></article><article class="stat"><span class="eyebrow">02 / PENGLIBATAN</span><strong id="stat-teachers">—</strong><span>Guru terlibat tahun ini</span></article><article class="stat"><span class="eyebrow">03 / ARKIB</span><strong id="stat-total">—</strong><span>Jumlah laporan</span></article><article class="stat"><span class="eyebrow">04 / KOMUNITI</span><strong id="stat-staff">—</strong><span>Guru berdaftar</span></article></div>
+          <div class="dashboard-grid"><article class="panel recent-card"><div class="section-title"><h3>Aktiviti terbaru</h3><button class="text-button" data-nav="archive">Semua rekod →</button></div><div id="recent-list"><p class="empty-state">Memuatkan rekod…</p></div></article><aside class="process-card"><p class="eyebrow">SATU ALIRAN, IMPAK BERSAMA</p><h3>Dari isu kepada<br>penambahbaikan.</h3><ol><li><b>FOCUS</b><span>Kenal pasti isu bersama.</span></li><li><b>IMPROVE</b><span>Laksanakan langkah penambahbaikan.</span></li><li><b>SHARE</b><span>Kongsikan dapatan dan amalan.</span></li></ol><button class="text-button" data-nav="form">Mulakan laporan anda →</button></aside></div>
+        </section>
+      </section>
+      <section id="archive-view" class="view" hidden aria-labelledby="archive-heading"><div class="page-heading"><div><p class="eyebrow">PUSAT DOKUMENTASI / ARKIB</p><h1 id="archive-heading">Jejak pembelajaran.</h1><p class="lede">Cari, buka PDF dan kemas kini laporan PLC sekolah.</p></div><button class="primary" data-nav="form">+ Laporan baharu</button></div>
+        <div class="filters"><label class="search-field">Carian<input id="archive-search" type="search" placeholder="Tajuk, nama guru atau ID PLC"></label><label>Tahun<select id="filter-year"><option value="">Semua tahun</option></select></label><label>Bidang<select id="filter-bidang"><option value="">Semua bidang</option></select></label><label>Alat kolaboratif<select id="filter-alat"><option value="">Semua alat</option></select></label></div>
+        <div class="archive-toolbar"><div class="view-toggle" role="group" aria-label="Susunan arkib"><button data-group="latest" aria-pressed="true">Terkini</button><button data-group="officer" aria-pressed="false">Ikut pegawai</button><button data-group="bidang" aria-pressed="false">Ikut bidang</button></div><span id="archive-count" class="muted" role="status"></span><button id="reset-filters" class="text-button">Tetap semula</button></div><div id="archive-list" class="panel archive-list"></div><button id="load-more" class="secondary load-more" hidden>Paparkan lagi</button>
+      </section>
+      <section id="form-view" class="view" hidden aria-labelledby="form-heading"><button class="back-button" data-nav="home">← Kembali ke dashboard</button><div class="page-heading"><div><p class="eyebrow">LAPORAN KOMUNITI PEMBELAJARAN PROFESIONAL</p><h1 id="form-heading">Catat. Kongsi. Berkembang.</h1><p class="lede">Lengkapkan laporan anda. PDF akan dijana dan disimpan ke arkib Google Drive.</p></div><span id="edit-banner" class="badge" hidden></span></div>
+        <div id="draft-banner" class="notice" hidden><span>Draf sesi sebelumnya tersedia.</span><button id="restore-draft" class="text-button">Sambung draf</button><button id="discard-draft" class="text-button">Buang draf</button></div>
+        <div id="uncertain-banner" class="notice warning" hidden><span>Status penghantaran terakhir belum dapat disahkan.</span><button id="review-save-status" class="text-button">Semak status simpanan</button></div>
+        <div class="form-layout"><aside class="form-sidebar"><p class="eyebrow">LAPORAN ANDA</p><nav class="step-nav" aria-label="Bahagian borang"><button data-step="0" aria-current="step"><span>01</span> Maklumat PLC</button><button data-step="1"><span>02</span> Alat & tempoh</button><button data-step="2"><span>03</span> Proses pelaksanaan</button><button data-step="3"><span>04</span> Ahli & pengesahan</button></nav><div class="sidebar-note"><b>Pembelajaran ialah usaha bersama.</b><p>Libatkan sekurang-kurangnya dua orang ahli dalam setiap laporan PLC.</p><small id="draft-status" role="status">Draf disimpan sepanjang sesi pelayar ini.</small></div></aside>
+        <form id="plc-form" class="panel" novalidate><div id="form-error" class="notice error" role="alert" tabindex="-1" hidden></div>
+          <section class="form-section" data-panel="0"><div class="section-heading"><span>01</span><div><h2>Maklumat PLC</h2><p>Mulakan dengan tujuan dan bidang kolaborasi anda.</p></div></div><div class="input-grid"><label class="wide">Nama sekolah / organisasi<input value="SK METHODIST PJ" readonly aria-readonly="true"></label><label class="wide">Tajuk PLC <span class="required">*</span><input name="tajuk" id="tajuk" required maxlength="300" placeholder="Contoh: Meningkatkan penguasaan bacaan murid"></label><label>Tahun laporan <span class="required">*</span><input name="tahun" id="tahun" type="number" min="2000" max="2100" required></label></div><fieldset><legend>Domain Kompetensi SGM 2.0 <span class="required">*</span></legend><p class="help">Pilih satu atau lebih domain yang berkaitan.</p><div id="domain-options" class="choice-grid"></div></fieldset><fieldset><legend>Bidang KPP / PLC <span class="required">*</span></legend><div id="bidang-options" class="choice-grid single-column"></div></fieldset><div class="input-grid conditional-grid"><label id="subject-wrap" hidden>Mata pelajaran <span class="required">*</span><input name="mataPelajaran" id="mataPelajaran" maxlength="200" disabled></label><label id="management-wrap" hidden>Pengurusan <span class="required">*</span><input name="pengurusan" id="pengurusan" maxlength="200" disabled></label></div></section>
+          <section class="form-section" data-panel="1" hidden><div class="section-heading"><span>02</span><div><h2>Alat & tempoh</h2><p>Tentukan pendekatan kolaborasi dan tempoh pelaksanaan.</p></div></div><fieldset><legend>Alat kolaboratif <span class="required">*</span></legend><p class="help">Pilih satu atau lebih alat yang digunakan.</p><div id="alat-options" class="choice-grid"></div></fieldset><label id="other-wrap" hidden>Nyatakan alat lain <span class="required">*</span><input id="alatLain" name="alatLain" maxlength="300" disabled></label><div class="input-grid date-grid"><label>Tarikh mula · FOCUS <span class="required">*</span><input id="tarikhMula" name="tarikhMula" type="date" required></label><label>Tarikh akhir · SHARE <span class="required">*</span><input id="tarikhAkhir" name="tarikhAkhir" type="date" required></label></div><p class="help">Tarikh akhir mesti sama atau selepas tarikh mula.</p></section>
+          <section class="form-section" data-panel="2" hidden><div class="section-heading"><span>03</span><div><h2>Proses pelaksanaan</h2><p>Catat pengalaman sebenar kumpulan anda.</p></div></div><div class="process-field focus"><div class="process-label"><span>01 / FOCUS</span><small id="focus-date"></small></div><label for="focus">Punca / isu / masalah <span class="required">*</span></label><textarea id="focus" name="focus" rows="5" required placeholder="Apakah isu yang dikenal pasti? Nyatakan bukti atau pemerhatian awal."></textarea><details><summary>Panduan penulisan</summary><p>Nyatakan isu, kumpulan sasaran dan bukti awal. Contoh permulaan: “Berdasarkan pemerhatian…, kumpulan kami mengenal pasti…”</p></details></div><div class="process-field improve"><div class="process-label"><span>02 / IMPROVE</span></div><label for="improve">Aktiviti / langkah pelaksanaan <span class="required">*</span></label><textarea id="improve" name="improve" rows="5" required placeholder="Bagaimanakah kumpulan bekerjasama untuk menangani isu tersebut?"></textarea><details><summary>Panduan penulisan</summary><p>Huraikan aktiviti, peranan ahli dan langkah penambahbaikan. Masukkan tindakan yang benar-benar dilaksanakan.</p></details></div><div class="process-field share"><div class="process-label"><span>03 / SHARE</span><small id="share-date"></small></div><label for="share">Dapatan / perkongsian <span class="required">*</span></label><textarea id="share" name="share" rows="5" required placeholder="Apakah dapatan, bagaimana ia dikongsi, dan apakah tindakan seterusnya?"></textarea><details><summary>Panduan penulisan</summary><p>Nyatakan hasil yang diperhatikan, cara perkongsian dan cadangan susulan. Elakkan menyatakan impak yang belum dibuktikan.</p></details></div></section>
+          <section class="form-section" data-panel="3" hidden><div class="section-heading"><span>04</span><div><h2>Ahli & pengesahan</h2><p>Lengkapkan keahlian dan pegawai laporan.</p></div></div><fieldset><legend>Ahli kumpulan <span class="required">*</span></legend><p class="help">Minimum dua orang ahli berbeza.</p><div id="member-list"></div><button id="add-member" class="secondary" type="button">+ Tambah ahli</button></fieldset><div class="input-grid"><label>Disediakan oleh <span class="required">*</span><select id="disediakanOleh" name="disediakanOleh" required></select></label><label>Disahkan oleh <span class="optional">(pilihan)</span><select id="disahkanOleh" name="disahkanOleh"></select></label></div><div class="notice submission-note">Selepas disimpan, laporan PDF boleh dibuka melalui arkib. Mengemas kini laporan akan menjana PDF baharu.</div></section>
+          <div class="form-footer"><span id="step-count">Bahagian 1 daripada 4</span><div><button id="previous-step" class="secondary" type="button" hidden>← Kembali</button><button id="next-step" class="primary" type="button">Seterusnya →</button><button id="submit-report" class="primary" type="submit" hidden>Simpan & jana PDF</button></div></div>
+        </form></div>
+      </section>
+    </main>
+    <footer><span>SK METHODIST PJ</span><span>MPS PLC · Belajar bersama, berkembang bersama.</span></footer>
+  </div>
+  <dialog id="status-dialog" aria-labelledby="status-title"><p class="eyebrow">MPS PLC / DOKUMENTASI</p><div id="processing-indicator" class="processing-indicator" aria-hidden="true"></div><h2 id="status-title" class="editorial">Memproses laporan.</h2><p id="status-message" role="status" aria-live="polite"></p><div id="status-actions" class="dialog-actions"></div></dialog>
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title"><p class="eyebrow">DRAF LAPORAN</p><h2 id="confirm-title">Tinggalkan borang ini?</h2><p>Perubahan anda disimpan sebagai draf dalam sesi pelayar ini.</p><div class="dialog-actions"><button id="confirm-cancel" class="secondary">Teruskan mengisi</button><button id="confirm-leave" class="primary">Tinggalkan borang</button></div></dialog>
+  <div id="toast" role="status" class="toast" hidden></div>
+  <noscript><p class="notice error">Sila aktifkan JavaScript untuk menggunakan portal PLC.</p><style>.app-loader{display:none}</style></noscript>
+</body>
+</html>
